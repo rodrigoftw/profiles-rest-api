@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,6 +23,7 @@ class HelloApiView(APIView):
             'Gives you the most control over your logic',
             'Is mapped manually to URLs'
         ]
+
         return Response({'message': 'Hello!', 'an_apiview': an_apiview})
 
     def post(self, request):
@@ -35,7 +37,7 @@ class HelloApiView(APIView):
                 return Response({'message': message})
             else:
                 return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk=None):
         """Handles updating an object."""
@@ -51,3 +53,18 @@ class HelloApiView(APIView):
         """Deletes an object."""
 
         return Response({'methhod': 'delete'})
+
+
+class HelloViewSet(viewsets.ViewSet):
+    """Test API ViewSet."""
+
+    def list(self, request):
+        """Return a hello message."""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automaticaly maps to URLs using Routers',
+            'Provides more functionality with less code.'
+        ]
+
+        return Response({'message': 'Hello!', 's_viewset': a_viewset})
